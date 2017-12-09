@@ -1,0 +1,28 @@
+{
+  "name": "stocker",
+  "version": "0.0.1",
+  "description": "CryptoCurrency Stock watcher",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "-"
+  },
+  "keywords": [
+    "stock",
+    "crypto",
+    "bitcoin",
+    "currency"
+  ],
+  "author": "Daen Rebel",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "clear": "0.0.1",
+    "clui": "^0.3.6",
+    "coinmarketcap-api": "^1.0.0",
+    "tab": "^1.0.0"
+  }
+}
