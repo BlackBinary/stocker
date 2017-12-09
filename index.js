@@ -68,7 +68,6 @@ function gatherStocks(result) {
             var prevValue = prevResult[key];
 
             if(stockValue.last_updated !== prevValue.last_updated){
-                history[key] += ',5';
                 isUpdate = true;
                 if(stockValue.rank == prevValue.rank){
                     pricebtc = compareResult(pricebtc, prevValue.price_btc.substring(0, 8));
