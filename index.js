@@ -42,7 +42,7 @@ function mainLoop(){
 
 var prevResult = null;
 
-// var history = [];
+var lookupArray = [];
 
 function gatherStocks(result) {
     var plotRows = [];
@@ -52,10 +52,7 @@ function gatherStocks(result) {
         // Get the current stock value
         var stockValue = result[key];
 
-        // if(!prevResult){
-        //     history[key] = 0;
-        // }
-
+        // Define the vars for the rest of the applications
         var name = chalk.grey(stockValue.name);
         var symbol = chalk.grey(stockValue.symbol);
         var rank = stockValue.rank;
@@ -64,18 +61,21 @@ function gatherStocks(result) {
         var updated = '=';
         var change = stockValue[plotSettings().change];
 
+        // Push new id to the lookup table and set the info we want
+        lookupArray[stockValue.id] = rank;
+
         if(prevResult){
             var prevValue = prevResult[key];
 
             if(stockValue.last_updated !== prevValue.last_updated){
                 isUpdate = true;
-                if(stockValue.rank == prevValue.rank){
+                if(stockValue.id == prevValue.id){
                     pricebtc = compareResult(pricebtc, prevValue.price_btc.substring(0, 8));
                     priceval = compareResult(priceval, prevValue[plotSettings().price].substring(0, 8));
                     change = compareResult(stockValue[plotSettings().change], prevValue[plotSettings().change]);
                     updated = chalk.red('+');
                 } else {
-                    rank = compareResult(stockValue.rank, prevValue.rank);
+                    rank = compareResult(lookupArray[prevValue.id], lookupArray[stockValue.id]);
                     updated = chalk.blue('?');
                 }
             }
@@ -185,7 +185,6 @@ function plotStocks(stocks){
         }
     ];
 
-    // console.log(rows);
     table.emitTable({
         'columns': columns,
         'columnSeparator': ' | ',
