@@ -22,8 +22,16 @@ var settings = {
     convert: 'EUR', // Main currency to display
     limit: maxCoins, // Change to default value or keep it like this for the height of the console
     time: '1H', // Choose between 1h, 24h, 7d of change time,
-    interval: 20000, // 20000 = 20 seconds
+    interval: 20000 // 20000 = 20 seconds
 };
+
+// Coins of interest
+var coi = [
+    'Bitcoin',
+    'Ethereum',
+    'Monero',
+    'Electroneum'
+];
 
 // Set a interval for gettings the stocks
 mainLoop();
@@ -53,7 +61,7 @@ function gatherStocks(result) {
         var stockValue = result[key];
 
         // Define the vars for the rest of the applications
-        var name = chalk.grey(stockValue.name);
+        var name = stockValue.name;
         var symbol = chalk.grey(stockValue.symbol);
         var rank = stockValue.rank;
         var pricebtc = stockValue.price_btc.substring(0, 8);
@@ -80,25 +88,13 @@ function gatherStocks(result) {
                 }
             }
         }
-        // { id: 'bitcoindark',
-        // name: 'BitcoinDark',
-        // symbol: 'BTCD',
-        // rank: '54',
-        // price_usd: '151.006',
-        // price_btc: '0.0100462',
-        // '24h_volume_usd': '351834.0',
-        // market_cap_usd: '194625923.0',
-        // available_supply: '1288862.0',
-        // total_supply: '1288862.0',
-        // max_supply: null,
-        // percent_change_1h: '-0.59',
-        // percent_change_24h: '16.05',
-        // percent_change_7d: '19.03',
-        // last_updated: '1512816549',
-        // price_eur: '128.362801306',
-        // '24h_volume_eur': '299076.843534',
-        // market_cap_eur: '165441960.0' }
-      
+
+        if(coi.indexOf(name) !== -1){
+            name = chalk.bgMagenta(name);
+        } else {
+            name = chalk.grey(name);
+        }
+
         // Filter the vars we want
         var plotValues = [
             name,
@@ -165,7 +161,7 @@ function plotStocks(stocks){
         }, {
             'label': 'rank',
             'align': 'left',
-            'width': maxCoins.toString().length + 2
+            'width': maxCoins.toString().length + 1
         }, {
             'label': 'priceval',
             'align': 'left',
@@ -188,7 +184,7 @@ function plotStocks(stocks){
     table.emitTable({
         'columns': columns,
         'columnSeparator': ' | ',
-        'omitHeader': true,   
+        'omitHeader': true,
         'rows': rows
     });
 }
